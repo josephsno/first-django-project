@@ -1,0 +1,55 @@
+{% extends 'main.html' %}
+
+
+{% block content %}
+
+
+    <style>
+        .comment-form {
+            color: rgb(255, 255, 255);
+            background-color: rgb(14, 63, 75);
+            border: none;
+            padding: 10px 50px;
+
+        }
+        input[type=text] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 3px 0;
+            width: 200px;
+            height: 20px;
+            border: 1px solid blue;
+        }
+    </style>
+
+
+    {% if page == 'login' %}
+        <div>
+            <form method="POST" action="">
+                {% csrf_token %}
+
+                <label>Username:</label>
+                <input type="text" name="Username" placeholder="Enter Username"/>
+
+                <label>Password:</label>
+                <input type="password" name="Password" placeholder="Enter Password"/>
+
+                <input type="submit" value="Login"/>
+            </form>
+            <p>haven't signed up yet?</p>
+            <a href="{% url 'register' %}">Sign up</a>
+        </div>
+
+    {% else %}
+        <div>
+            <form method="POST" action="">
+                {% csrf_token %}
+                {{ form.as_p }}
+
+                <input type="submit" value="REGISTER" class="comment-form"/>
+            </form>
+            <p>Already signed up?</p>
+            <a href=" {% url 'login' %} ">Login</a>
+        </div>
+    {% endif %}
+{% endblock content %}
