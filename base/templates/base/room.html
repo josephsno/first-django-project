@@ -20,11 +20,15 @@
                     <hr>
                         {% for message in room_messages %}
                             <div>
-                                <a href="{% url 'delete-message' message.id %}">Delete Message</a>
+                                {% if request.user.is_authenticated %}
+                                    {% if request.user == message.user %}
+                                        <a href="{% url 'delete-message' message.id %}">Delete Message</a>
+                                    {% endif %}
+                                {% endif %}
                                 <small>@{{ message.user }}
                                     {{ message.created|timesince }}
                                     ago</small>
-                                <p>{{ message }}</p>
+                                <p>{{ message.body }}</p>
                                 <hr></div>
                             {% endfor %}
                             {% if request.user.is_authenticated %}
