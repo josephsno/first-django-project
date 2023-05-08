@@ -20,6 +20,7 @@
                     <hr>
                         {% for message in room_messages %}
                             <div>
+                                <a href="{% url 'delete-message' message.id %}">Delete Message</a>
                                 <small>@{{ message.user }}
                                     {{ message.created|timesince }}
                                     ago</small>
@@ -38,9 +39,17 @@
 
 
                 </div>
-                <div>
-                    <h>PARTICIPANTS</h>
-                    <hr></div>
+                {% if request.user.is_authenticated %}
+                    <div>
+                        <h>PARTICIPANTS</h>
+                        <hr>
+                            {% for user in participants %}
+                                <p>@{{ user }}</p>
+
+
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
 
             {% endblock %}
