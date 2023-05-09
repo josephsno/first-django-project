@@ -13,59 +13,24 @@
     <hr>
         <div class="home-container">
             <div>
-                <h3>Browse Topics</h3>
-                <hr>
-                    <div>
-                        <a href="{% url 'home' %}">All</a>
-                    </div>
-                    {% for topic in topics %}
-                        <div>
-                            <a href="{% url 'home' %}?q={{ topic.name }}">{{ topic.name }}</a>
-                        </div>
+                {% include 'base/topic_components.html' %}
+            </div>
 
-
-                    {% endfor %}
-                </div>
-
+            <div>
+                <h5>{{ room_count }}
+                    rooms available</h5>
+                <a href="{% url 'create-room' %}">Create Room</a>
                 <div>
-                    <h5>{{ room_count }}
-                        rooms available</h5>
-                    <a href="{% url 'create-room' %}">Create Room</a>
-                    <div>
-                        {% for room in rooms %}
-                            <div>
-                                {% if request.user == room.host %}
-                                    <a href="{% url 'update-room' room.id %}">Edit</a>
-                                    <a href="{% url 'delete-room' room.id %}">Delete room</a>
-                                {% endif %}
-                                <span>@{{ room.host.username }}</span>
-                                <h5>{{ room.id }}
-                                    --
-                                    <a href="{% url 'room' room.id %}">{{ room.name }}</a>
-                                </h5>
-                                <small>{{ room.topic.name }}</small>
-                                <hr></div>
+                    {% include 'base/feed_component.html' %}
+                </div>
+            </div>
+            <div>
+                {% include 'base/activity_component.html' %}
+            </div>
 
-                            {% endfor %}
-                        </div>
-                    </div>
-                    <div>
-                        <h3>RECENT ACTIVITY</h3>
-                        <hr>
-                            {% for act in room_messages %}
-                                <small>@{{ act.user }}
-                                    {{ act.created|timesince }}
-                                    ago</small>
-                                <div>Replied to post "{{ act.room }}"</div>
-                                <div>{{ act }}</div>
-                                <hr>
+        </div>
+
+    </div>
 
 
-                                {% endfor %}
-                            </div>
-                        </div>
-
-                    </div>
-
-
-                {% endblock %}
+{% endblock %}
